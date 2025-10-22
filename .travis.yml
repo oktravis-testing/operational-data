@@ -1,24 +1,13 @@
 os: linux
-language: java
-services:
-  - docker
-cache: bundler
+language: generic
 dist: focal
-install: skip
 
-stages:
-  - name: test
+vm:
+  create:
+    name: operational-data-i1
 
-jobs:
-  include:
-    - stage: test
-      name: testing
-      script: true
-
-after_success:
-  - echo passed
-  - echo $TRAVIS_TEST_RESULT
-
-after_failure:
-  - echo failed
-  - echo $TRAVIS_TEST_RESULT
+script:
+  - echo "Creating custom file"
+  - sudo mkdir /my-custom-dir
+  - echo "Test custom image!" | sudo tee /my-custom-dir/my_custom_file.txt
+  - sudo cat /my-custom-dir/my_custom_file.txt
